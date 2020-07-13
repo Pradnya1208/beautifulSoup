@@ -72,7 +72,7 @@ for x in deaths:
 for x in recovery:
     c.execute("INSERT INTO World(Recovery) VALUES(%s)", (x,))
 
-DELETE FROM World WHERE Location IS NULL;
+c.execute("DELETE FROM World WHERE Location IS NULL")
 
 conn.commit()
 
