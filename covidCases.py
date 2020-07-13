@@ -62,7 +62,7 @@ attr_name[3] = "Recovery"
 
 
 
-conn = MySQLdb.connect("sqlserver", "username","password", "datavbase name")
+conn = MySQLdb.connect("sqlserver", "username","password", "database name")
 
 c = conn.cursor()
 table_name = "covid"
