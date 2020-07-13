@@ -1,11 +1,6 @@
 import MySQLdb
-
-
-
 from bs4 import BeautifulSoup
 import requests
-
-
 
 
 countries = []
@@ -56,8 +51,6 @@ attr_name[3] = "Recovery"
 #print(attr_name)
 
 
-
-
 conn = MySQLdb.connect("mysql.server", "username","password", "database name")
 
 c = conn.cursor()
@@ -66,8 +59,6 @@ table_name = "World"
 createsqltable = """CREATE TABLE IF NOT EXISTS """ + table_name + " (" + " CHAR(50),".join(attr_name) + " CHAR(50))"
 #print (createsqltable)
 c.execute(createsqltable)
-
-
 
 for x in country_name:
     c.execute("INSERT INTO World(Location) VALUES(%s)", (x,))
