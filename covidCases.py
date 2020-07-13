@@ -1,6 +1,9 @@
 import MySQLdb
+
 from bs4 import BeautifulSoup
 import requests
+
+
 
 
 countries = []
@@ -31,15 +34,21 @@ recovery =[]
 attr_name =[]
 
 for values in countries:
-    country_name.append((values.text).split("[")[0])
+    country_name.append(((values.text).split("[")[0]).split("\n")[0])
 i=1
 for entry in data:
     if i%3 == 1:
-        total_cases.append(entry.text)
+        tc = (entry.text).split("\n")[0]
+        tc = tc.replace(',','')
+        total_cases.append(tc)
     if i%3 == 2:
-        deaths.append(entry.text)
-    if i%3 == 3:
-        recovery.append(entry.text)
+        dt = (entry.text).split("\n")[0]
+        dt = dt.replace(',','')
+        deaths.append(dt)
+    if i%3 == 0:
+        rec = (entry.text).split("\n")[0]
+        rec = rec.replace(',','')
+        recovery.append(rec)
     i += 1
 
 for attr in atr:
@@ -51,30 +60,24 @@ attr_name[3] = "Recovery"
 #print(attr_name)
 
 
-conn = MySQLdb.connect("mysql.server", "username","password", "database name")
+
+
+conn = MySQLdb.connect("pradnyapatil.mysql.pythonanywhere-services.com", "pradnyapatil","N126p@punep", "pradnyapatil$default")
 
 c = conn.cursor()
-
-table_name = "World"
-createsqltable = """CREATE TABLE IF NOT EXISTS """ + table_name + " (" + " CHAR(50),".join(attr_name) + " CHAR(50))"
-#print (createsqltable)
+table_name = "covid"
+createsqltable = """CREATE TABLE IF NOT EXISTS """ + table_name + " (" + " VARCHAR(50),".join(attr_name) + " VARCHAR(50))"
+print (createsqltable)
 c.execute(createsqltable)
 
-for x in country_name:
-    c.execute("INSERT INTO World(Location) VALUES(%s)", (x,))
 
-for x in total_cases:
-    c.execute("INSERT INTO World(Cases) VALUES(%s)", (x,))
 
-for x in deaths:
-    c.execute("INSERT INTO World(Deaths) VALUES(%s)", (x,))
+for (x,x1,x2,x3) in zip(country_name,total_cases,deaths,recovery):
+    c.execute("INSERT INTO covid(Location,Cases,Deaths,Recovery) VALUES(%s, %s, %s, %s)", (x,x1,x2,x3,))
 
-for x in recovery:
-    c.execute("INSERT INTO World(Recovery) VALUES(%s)", (x,))
-
-c.execute("DELETE FROM World WHERE Location IS NULL")
 
 conn.commit()
+
 
 
 
