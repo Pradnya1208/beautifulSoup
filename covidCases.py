@@ -62,7 +62,7 @@ attr_name[3] = "Recovery"
 
 
 
-conn = MySQLdb.connect("pradnyapatil.mysql.pythonanywhere-services.com", "pradnyapatil","N126p@punep", "pradnyapatil$default")
+conn = MySQLdb.connect("sqlserver", "username","password", "datavbase name")
 
 c = conn.cursor()
 table_name = "covid"
