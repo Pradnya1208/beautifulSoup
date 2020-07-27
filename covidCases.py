@@ -10,7 +10,7 @@ countries = []
 data = []
 atr = []
 
-urls = "https://en.wikipedia.org/wiki/COVID-19_pandemic"
+urls = "https://en.wikipedia.org/wiki/COVID-19_pandemic_by_country_and_territory"
 covid_world = requests.get(urls)
 soup_world = BeautifulSoup(covid_world.content, 'html.parser')
 
